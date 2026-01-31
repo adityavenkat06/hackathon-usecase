@@ -22,5 +22,5 @@ module "gke" {
   services_range_name  = module.network.services_range_name
   node_locations       = var.zones
   node_machine_type    = "e2-medium"
-  node_count           = 2
+  node_count           = 1
 }
