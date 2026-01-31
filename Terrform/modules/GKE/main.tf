@@ -1,3 +1,5 @@
+# GKE resource
+
 resource "google_container_cluster" "gke" {
   name     = var.cluster_name
   location = var.region
