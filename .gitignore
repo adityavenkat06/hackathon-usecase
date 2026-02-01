@@ -13,3 +13,5 @@ crash.*.log
 *.tfstate.*
 crash.log
 crash.*.log
+Terrform/Env/dev/pathtotf-admin-key.json
+**/*key.json

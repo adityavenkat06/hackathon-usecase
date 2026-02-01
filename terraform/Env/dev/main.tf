@@ -24,3 +24,11 @@ module "gke" {
   node_machine_type    = "e2-medium"
   node_count           = 1
 }
+
+module "artifact_registry" {
+  source        = "../../modules/artifact_registry"
+  project_id    = var.project_id
+  region        = var.region
+  repository_id = "ms-docker"
+  description   = "Docker images for microservices"
+}
