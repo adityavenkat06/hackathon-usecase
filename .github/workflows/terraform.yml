@@ -1,13 +1,25 @@
 name: Terraform
 
 on:
-  pull_request:
-  push:
-    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      run_fmt_validate:
+        description: "Run terraform fmt/validate"
+        type: boolean
+        default: true
+      run_plan:
+        description: "Run terraform plan"
+        type: boolean
+        default: true
+      run_apply:
+        description: "Run terraform apply (main branch only)"
+        type: boolean
+        default: false
 
 jobs:
   fmt-validate:
     runs-on: ubuntu-latest
+    if: ${{ inputs.run_fmt_validate }}
     steps:
       - uses: actions/checkout@v4
 
@@ -25,7 +37,7 @@ jobs:
           terraform validate
 
   plan:
-    if: github.event_name == 'pull_request'
+    if: ${{ inputs.run_plan }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -61,7 +73,7 @@ jobs:
           path: Terrform/Env/dev/tfplan
 
   apply:
-    if: github.ref == 'refs/heads/main'
+    if: ${{ inputs.run_apply && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
