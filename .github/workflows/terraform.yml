@@ -32,7 +32,7 @@ jobs:
 
       - name: Terraform validate
         run: |
-          cd Terrform/Env/dev
+          cd terraform/Env/dev
           terraform init -backend=false
           terraform validate
 
@@ -58,19 +58,19 @@ jobs:
 
       - name: Terraform init
         run: |
-          cd Terrform/Env/dev
+          cd terraform/Env/dev
           terraform init
 
       - name: Terraform plan
         run: |
-          cd Terrform/Env/dev
+          cd terraform/Env/dev
           terraform plan -out=tfplan
 
       - name: Upload plan
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
-          path: Terrform/Env/dev/tfplan
+          path: terraform/Env/dev/tfplan
 
   apply:
     if: ${{ inputs.run_apply && github.ref == 'refs/heads/main' }}
@@ -94,10 +94,10 @@ jobs:
 
       - name: Terraform init
         run: |
-          cd Terrform/Env/dev
+          cd terraform/Env/dev
           terraform init
 
       - name: Terraform apply
         run: |
-          cd Terrform/Env/dev
+          cd terraform/Env/dev
           terraform apply -auto-approve
