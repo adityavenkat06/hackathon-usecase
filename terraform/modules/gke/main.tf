@@ -4,6 +4,8 @@ resource "google_container_cluster" "gke" {
   name     = var.cluster_name
   location = var.region
 
+  deletion_protection = false
+
   network    = var.network_self_link
   subnetwork = var.subnetwork_self_link
 
@@ -30,6 +32,10 @@ resource "google_container_cluster" "gke" {
 
   release_channel {
     channel = "REGULAR"
+  }
+
+  lifecycle {
+    prevent_destroy = false
   }
 }
 
