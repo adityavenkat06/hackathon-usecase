@@ -16,6 +16,10 @@ on:
         type: boolean
         default: false
 
+concurrency:
+  group: terraform-dev
+  cancel-in-progress: true
+
 jobs:
   fmt-validate:
     runs-on: ubuntu-latest
@@ -39,6 +43,7 @@ jobs:
   plan:
     if: ${{ inputs.run_plan }}
     runs-on: ubuntu-latest
+    needs: fmt-validate
     permissions:
       id-token: write
       contents: read
@@ -75,6 +80,7 @@ jobs:
   apply:
     if: ${{ inputs.run_apply && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
+    needs: [fmt-validate, plan]
     permissions:
       id-token: write
       contents: read
